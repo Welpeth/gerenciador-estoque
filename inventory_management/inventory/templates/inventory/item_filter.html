@@ -1,0 +1,49 @@
+{% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class ="row">
+    <div class="col-md-10 col-12 mx-auto mt-5">
+        <a href="{% url 'dashboard'%}" class = "btn btn-outline-primary my-3"> Go Back</a>
+    <form method="get" action="{% url 'item-filter' %}">
+        <div class="form-group">
+            <input 
+                type="text" 
+                name="name" 
+                class="form-control" 
+                placeholder="Filter by name"
+                value="{{ name }}" >
+        </div>
+        <button type="submit" class="btn btn-primary mt-5">Filter</button>
+    </form>
+    
+    <!-- Tabela de Itens -->
+    <table class="table table-hover table-striped mt-4">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if items %}
+                {% for item in items %}
+                    <tr>
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.category.name }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No items found</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock content %}
